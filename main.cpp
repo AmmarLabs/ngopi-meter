@@ -1,5 +1,6 @@
+// Link Video : https://drive.google.com/drive/folders/1DlSPcNOeq9c1CpCrhBZilbV6a-a3mxD8?usp=sharing
+
 #include <iostream>
-#include <iomanip>
 #include <unordered_map>
 #include <conio.h>
 using namespace std;
@@ -9,10 +10,11 @@ unordered_map<string, string> userDatabase;
 
 bool registerUser() {
     string username, password;
-    cout << setw(50) << "Program Kopi Meter\n";
+    cout << "Program Kopi Meter\n";
     cout << ">>> Registrasi Pengguna Baru!\n";
     cout << "Username Apa: "; cin >> username;
 
+    // Looping validasi input password wajib >= 10 char
     do {
         cout << "Masukkan Passwordmu: "; cin >> password;
 
@@ -21,6 +23,7 @@ bool registerUser() {
         }
     } while (password.length() < 10);
 
+    // Simpan kredensial ke hashmap
     userDatabase[username] = password;
     cout << "Password Sukses Dimasukkan\n";
     return true;
@@ -29,6 +32,7 @@ bool registerUser() {
 bool loginUser() {
     string username, password;
     
+    // looping infinite sampai user memasukkan kredensial yg benar
     do {
         cout << ">> Menu Login <<\n";
         cout << "Username: ";
@@ -57,7 +61,7 @@ int main() {
         if (loginUser()) {
             do
             {
-                system("cls");
+                system("cls"); // Clear console
 
                 cout << ">>> Menu Program NgopiMeter <<<\n";
                 cout << "1. Hitung Cangkir Kopi\n";
@@ -73,6 +77,14 @@ int main() {
                     cout << ">> Perhitungan Cangkir Kopi\n";
                     cout << "Berapa Kopi yang telah kamu minum?: ";
                     cin >> cangkirKopi;
+
+                    // Validasi input minus / bukan angka
+                    if (cin.fail() || cangkirKopi < 0) {
+                        cin.clear();
+                        cin.ignore(10000, '\n');
+                        cout << "Kopinya Minus? Biar kutanyakan pada rumput yang bergoyang...\n";
+                        break;
+                    }
 
                     // Logika perhitungan cangkir kopi
                     if (cangkirKopi < 2)
@@ -93,6 +105,15 @@ int main() {
                     cout << "Udah Berapa Cangkir: ";
                     cin >> cangkirKopi;
 
+                    if (cin.fail() || cangkirKopi < 0)
+                    {
+                        cin.clear();
+                        cin.ignore(10000, '\n');
+                        cout << "Kopinya Minus? Biar kutanyakan pada rumput yang bergoyang...\n";
+                        break;
+                    }
+
+                    // Hitung durasi efek kafein
                     efekNormal = cangkirKopi * 1.5;
                     efekTotal = cangkirKopi * 1.5 * 1.1;
 
@@ -103,6 +124,14 @@ int main() {
                     cout << ">> Penghitung Tingkat Produktivitas\n";
                     cout << "Udah Berapa Cangkir: ";
                     cin >> cangkirKopi;
+
+                    if (cin.fail() || cangkirKopi < 0)
+                    {
+                        cin.clear();
+                        cin.ignore(10000, '\n');
+                        cout << "Kopinya Minus? Biar kutanyakan pada rumput yang bergoyang...\n";
+                        break;
+                    }
 
                     efekTotal = cangkirKopi * 1.5 * 1.1;
                     if (efekTotal < 3)
@@ -126,6 +155,7 @@ int main() {
                     break;
                 }
 
+                // Hold console agar user bisa baca output
                 if (pilihan != 4)
                 {
                     cout << "Press any key to continue...\n";
